@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
+@RequestMapping(value = "/event")
 public class EventController {
 
     private EventRepository eventRepository;
@@ -19,17 +20,23 @@ public class EventController {
         this.eventRepository = eventRepository;
     }
 
-    @RequestMapping(value = "/event/add", method = RequestMethod.GET)
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String showForm(Model model){
         model.addAttribute("event", new Event()); //html: th:object="${event}" -> controller: "event"
         return "add_event";
     }
 
-    @RequestMapping(value = "/event/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String submitForm(@ModelAttribute Event event){
         eventRepository.save(event);
-        return "add_event";
+        return "redirect:/event/add";
     }
 
+
+    @RequestMapping(value = "/show")
+    public String showData(Model model){
+        model.addAttribute("events", eventRepository.findAll());
+        return "events";
+    }
 
 }

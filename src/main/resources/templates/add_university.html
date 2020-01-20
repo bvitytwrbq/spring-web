@@ -1,21 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base :: head(~{::title})">
     <title>Добавление университета</title>
 </head>
 <body>
-    <h3>Форма добавления университета</h3>
+<th:block th:insert="index::header"></th:block>
 
-    <form method="post" th:action="@{/university/add}"
-          th:object="${university}">
-        <label>Название университета
-            <input th:field="*{universityName}" type="text">
-        </label>
-        <p>
-            <input type="submit" value="Добавить">
-        </p>
+<div class="container">
+    <h3>Добавление университета</h3>
+    <form th:fragment="university" method="post" th:action="@{/university/add}" th:object="${university}">
+        <div class="form-group">
+            <label for="universityName">Название университета</label>
+            <input th:field="*{universityName}" type="text" class="form-control" id="universityName" aria-describedby="name" placeholder="Введите название">
+            <small id="name" class="form-text text-muted">Университет, студенты которого могут регистрироваться на события</small>
+        </div>
+        <button type="submit" class="btn btn-primary">Добавить</button>
     </form>
+</div>
+
 
 </body>
 </html>

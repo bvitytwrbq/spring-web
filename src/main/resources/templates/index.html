@@ -1,15 +1,48 @@
 <!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base :: head(~{::title})">
+    <title>Страница</title>
+
 </head>
 <body>
-    <nav>
-        <a href="/university/add">Добавить университет</a>
-        <a href="/event/add">Добавить событие</a>
-        <a href="/student/add">Добавить участника</a>
-        <a href="/user/add">Добавить пользователя</a>
+<header th:fragment="header">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">SprinBoot</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Добавление данных
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/university/add">Университеты</a>
+                        <a class="dropdown-item" href="/event/add">События</a>
+                        <a class="dropdown-item" href="/student/add">Участники</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Просмотрт данных
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                        <a class="dropdown-item" href="/university/show">Университеты</a>
+                        <a class="dropdown-item" href="/event/show">События</a>
+                        <a class="dropdown-item" href="/student/show">Участники</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </nav>
+</header>
+
+<!--подключение изображений из папки static-->
+    <img th:src="@{img/spring.jpg}">
+
+<!--подключение js файлов из папки static-->
+<script  th:src="@{/js/index.js}"></script>
 </body>
 </html>

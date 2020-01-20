@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@RequestMapping(value = "/student")
 public class StudentController {
     private EventRepository eventRepository;
     private UniversityRepository universityRepository;
@@ -27,7 +28,7 @@ public class StudentController {
         this.studentRepository = studentRepository;
     }
 
-    @RequestMapping(value = "/student/add", method = RequestMethod.GET)
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String showForm(Model model){
         model.addAttribute("universities", universityRepository.findAll());
         model.addAttribute("events", eventRepository.findAll());
@@ -35,7 +36,7 @@ public class StudentController {
         return "add_student";
     }
 
-    @RequestMapping(value = "/student/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String submitForm(
             @ModelAttribute Student student,
             @RequestParam(name = "universityId") int universityId,
@@ -52,7 +53,7 @@ public class StudentController {
         university.getStudents().add(student);
         event.getStudents().add(student);
         studentRepository.save(student);
-        return "add_student";
+        return "redirect:/student/add";
     }
 
 
