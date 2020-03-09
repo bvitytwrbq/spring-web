@@ -1,40 +1,98 @@
 package com.ifmojava.springweb.entity;
 
-import javax.validation.constraints.*;
+import org.hibernate.annotations.GenericGenerator;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-public class User {
-//    @Min(3)
-//    @Max(34)
-    @Size(min = 3, max = 34, message = "От 3 до 34 символов")
-    private String login;
+import javax.persistence.*;
+import javax.validation.constraints.Size;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
-    @Pattern(regexp = "", message = "Ошибка при вводе пароля")
-    private String pwd;
+@Entity
+@Table(name = "user_table")
+public class User implements UserDetails {
+    @Id
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
+    private int id;
 
-    @Email(message = "Ошибка при вводе email")
-    private String email;
 
-    public String getEmail() {
-        return email;
+    @Size(min = 3, message = "min 3 symbols")
+    private String username;
+    @Size(min = 3, message = "min 3 symbols")
+    private String password;
+    @Transient
+    private String passwordConfirm;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles = new HashSet<>();
+
+
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
     }
 
-    public String getLogin() {
-        return login;
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
-    public String getPwd() {
-        return pwd;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
     }
 
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }
